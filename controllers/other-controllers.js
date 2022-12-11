@@ -76,6 +76,9 @@ const getNotifications = async (req, res, next) => {
       },
     });
   } catch (error) {}
+  if (user.notifications.length === 0) {
+    res.json({ notifications: [] });
+  }
   res.json({
     notifications: user.notifications.map((item) =>
       item.toObject({ getters: true })
