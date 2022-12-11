@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     if (!token) {
       throw new Error("Auth failed");
     }
-    const decodedToken = jwt.verify(token, "process.env.JWT_KEY");
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
     if (req.method === "PATCH") {
       req.userData = decodedToken.userId;
     } else {

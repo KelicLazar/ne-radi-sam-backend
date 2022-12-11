@@ -1,8 +1,0 @@
-{
-  "env": {
-    "DB_USER": "ne-radi-sam-admin",
-    "DB_PASSWORD": "DjbgkKnSqDI7lHaG",
-    "DB_NAME": "ne-radi-sam-prod",
-    "JWT_KEY": "superSecret"
-  }
-}
