@@ -65,7 +65,7 @@ const signUp = async (req, res, next) => {
     return next(new HttpError("Signing up failed", 500));
   }
   let userData = {
-    id: createdUser.id,
+    id: createdUser._id,
     email: createdUser.email,
     name: createdUser.name,
     phone: createdUser.phone,
