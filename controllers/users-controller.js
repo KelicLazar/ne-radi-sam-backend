@@ -55,7 +55,7 @@ const signUp = async (req, res, next) => {
   try {
     token = jwt.sign(
       {
-        userId: createdUser.id,
+        userId: createdUser._id,
         email: createdUser.email,
       },
       process.env.JWT_KEY,
@@ -65,7 +65,7 @@ const signUp = async (req, res, next) => {
     return next(new HttpError("Signing up failed", 500));
   }
   let userData = {
-    id: createdUser._id,
+    id: createdUser.id,
     email: createdUser.email,
     name: createdUser.name,
     phone: createdUser.phone,
