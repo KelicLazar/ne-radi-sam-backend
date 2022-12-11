@@ -76,9 +76,11 @@ const getNotifications = async (req, res, next) => {
       },
     });
   } catch (error) {}
-  if (user.notifications.length === 0) {
-    res.json({ notifications: [] });
+
+  if (!user) {
+    return next(new HttpError("There is no user with that id.", 404));
   }
+
   res.json({
     notifications: user.notifications.map((item) =>
       item.toObject({ getters: true })
