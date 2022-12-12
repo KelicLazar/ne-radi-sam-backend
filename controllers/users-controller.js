@@ -12,7 +12,7 @@ const signUp = async (req, res, next) => {
       new HttpError("Invalid inputs passed, please check your data", 422)
     );
   }
-  const { name, email, password, phone } = req.body;
+  const { name, email, phone } = req.body;
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -28,7 +28,7 @@ const signUp = async (req, res, next) => {
 
   let hashedPassword;
   try {
-    hashedPassword = await bcrypt.hash(password, 12);
+    hashedPassword = await bcrypt.hash(req.body.password, 12);
   } catch (error) {
     return next(new HttpError("Could not create use, please try again.", 500));
   }
@@ -64,19 +64,11 @@ const signUp = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Signing up failed", 500));
   }
-  let userData = {
-    id: createdUser.id,
-    email: createdUser.email,
-    name: createdUser.name,
-    phone: createdUser.phone,
-    image: createdUser.image,
-    jobs: createdUser.jobs,
-    rating: createdUser.rating,
-    notifications: createdUser.notifications,
-  };
+
+  const { password, ...user } = createdUser;
 
   res.status(201).json({
-    userData,
+    userData: user,
     token,
   });
 };
@@ -138,10 +130,8 @@ const logIn = async (req, res, next) => {
     return next(new HttpError("Logging in faileddd", 500));
   }
 
-  existingUser.password = undefined;
-  existingUser.id = existingUser._id;
-
-  res.json({ userData: existingUser, token });
+  const { password, ...user } = existingUser;
+  res.json({ userData: user, token });
 };
 
 const getUserDataById = async (req, res, next) => {
