@@ -65,10 +65,19 @@ const signUp = async (req, res, next) => {
     return next(new HttpError("Signing up failed", 500));
   }
 
-  const { password, ...user } = createdUser;
+  let userData = {
+    id: createdUser.id,
+    email: createdUser.email,
+    name: createdUser.name,
+    phone: createdUser.phone,
+    image: createdUser.image,
+    jobs: createdUser.jobs,
+    rating: createdUser.rating,
+    notifications: createdUser.notifications,
+  };
 
   res.status(201).json({
-    userData: user,
+    userData,
     token,
   });
 };
@@ -130,8 +139,17 @@ const logIn = async (req, res, next) => {
     return next(new HttpError("Logging in faileddd", 500));
   }
 
-  const { password, ...user } = existingUser;
-  res.json({ userData: user, token });
+  let userData = {
+    id: existingUser.id,
+    email: existingUser.email,
+    name: existingUser.name,
+    phone: existingUser.phone,
+    image: existingUser.image,
+    jobs: existingUser.jobs,
+    rating: existingUser.rating,
+    notifications: existingUser.notifications,
+  };
+  res.json({ userData, token });
 };
 
 const getUserDataById = async (req, res, next) => {
