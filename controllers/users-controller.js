@@ -139,6 +139,7 @@ const logIn = async (req, res, next) => {
   }
 
   existingUser.password = undefined;
+  existingUser.id = existingUser._id;
 
   res.json({ userData: existingUser, token });
 };
